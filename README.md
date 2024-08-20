@@ -1,13 +1,13 @@
 ```
-:: ██████╗██████╗ ██████╗::::::██████╗:███████╗::
-::██╔════╝██╔══██╗██╔══██╗::::██╔═████╗██╔════╝::
-::██║:::::██████╔╝██████╔╝::::██║██╔██║███████╗::
-::██║:::::██╔═══╝ ██╔═══╝ ::::████╔╝██║╚════██║::
-::╚██████╗██║:::::██║:::::::::╚██████╔╝███████║::
-:: ╚═════╝╚═╝:::::╚═╝::::::::: ╚═════╝:╚══════╝::
+:::██████╗██████╗ ██████╗:::::██████╗::██████╗:::
+::██╔════╝██╔══██╗██╔══██╗:::██╔═████╗██╔════╝:::
+::██║:::::██████╔╝██████╔╝:::██║██╔██║███████╗:::
+::██║:::::██╔═══╝ ██╔═══╝::::████╔╝██║██╔═══██╗::
+::╚██████╗██║:::::██║::::::::╚██████╔╝╚██████╔╝::
+:::╚═════╝╚═╝:::::╚═╝:::::::::╚═════╝::╚═════╝:::
 ```
-                                             
-*This module is designed to help you understand Try/Catch and Exceptions in CPP.*
+
+*This module is designed to help you understand the different casts in CPP.*
 
  Skills | Grade |
 :------:|:-----:|
@@ -18,7 +18,9 @@
   * **[General rules](#general-rules)**
   * **[design requirements](#alguns-requisitos-de-design)**
   * **[Read me](#read-me)**
-* **[Wiki](https://github.com/faleite/42cpp00/wiki/Module-VI)**
+  * **[Orthodox Canonical Form](#orthodox-canonical-form)**
+  * **[Regra adicional (CPP06)](#regra-adicional-cpp06)**
+* **[Wiki](https://github.com/faleite/42cpp00/wiki/)**
 * **[Roadmap](https://faleite.github.io/cpp)**
 * **[Study resources](#study-resources)**
 <!-- * ### [Usage]() -->
@@ -55,20 +57,24 @@
 
 > Você tem uma certa liberdade para completar os exercícios. Porém, siga as regras obrigatórias e não seja preguiçoso. Você perderia muitas informações úteis! Não hesite em ler sobre conceitos teóricos.
 
-## Novas regras
-- De agora em diante, todas as suas classes devem ser projetadas na Forma **Orthodox Canonical Form** (Forma Canônica Ortodoxa), a menos que explicitamente declarado o contrário. Então, elas implementarão as quatro funções de membro necessárias abaixo:
+###  Orthodox Canonical Form
+- Todas as suas classes devem ser projetadas na Forma **Orthodox Canonical Form** (Forma Canônica Ortodoxa), a menos que explicitamente declarado o contrário. Então, elas implementarão as quatro funções de membro necessárias abaixo:
   - Construtor padrão
   - Construtor de cópia
   - Operador de atribuição de cópia
   - Destrutor
 
-Divida o código da sua classe em dois arquivos. O arquivo de cabeçalho (.hpp/.h) contém a definição da classe, enquanto o arquivo de origem (.cpp) contém a implementação.
+*Divida o código da sua classe em dois arquivos. O arquivo de cabeçalho (.hpp/.h) contém a definição da classe, enquanto o arquivo de origem (.cpp) contém a implementação.*
 
+### Regra adicional (CPP06)
+- A regra a seguir se aplica a todo o módulo e não é opcional.
+  - Para cada exercício, a conversão de tipo deve ser resolvida usando um tipo específico de **casting**.
+  - Sua escolha será verificada durante a defesa.
 
 ## Study resources
 Resource | Source
 ---------|:-----:
-[CPP Module 05](https://github.com/faleite/42cpp00/wiki/Module-VI) | `Wiki`
+[CPP Module 06](https://github.com/faleite/42cpp00/wiki/Module-VII) | `Wiki`
 [CPP Tutorial (C++98)](https://cplusplus.com/doc/oldtutorial) | `Website`
 [CPP Reference](https://cplusplus.com/) | `Website`
 [CPP++ shell](http://cpp.sh) | `run code online`
