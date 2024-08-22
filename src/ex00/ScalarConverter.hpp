@@ -6,7 +6,7 @@
 /*   By: faaraujo <faaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 19:42:59 by faaraujo          #+#    #+#             */
-/*   Updated: 2024/08/20 20:04:27 by faaraujo         ###   ########.fr       */
+/*   Updated: 2024/08/22 22:21:12 by faaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,3 +58,67 @@ Se uma conversão não fizer sentido ou estourar, exiba uma mensagem para inform
 ao usuário que a conversão de tipo é impossível. Inclua qualquer cabeçalho 
 necessário para lidar com limites numéricos e valores especiais.
 */
+
+#ifndef SCALARCONVERTER_HPP
+# define SCALARCONVERTER_HPP
+
+#include <iostream>
+
+enum
+{
+	CHAR = 2,
+	INT,
+	FLOAT,
+	DOUBLE,
+	INFINITY_FLOAT,
+	INFINITY_DOUBLE,
+	QUIET_NAN,
+};
+
+class ScalarConverter
+{
+	private:
+		ScalarConverter();
+		ScalarConverter(const ScalarConverter &copyObj);
+		ScalarConverter &operator=(const ScalarConverter &assignCopy);
+		~ScalarConverter();
+	public:
+		static void convert(std::string &output);
+};
+
+ScalarConverter::ScalarConverter()
+{
+	std::cout << "ScalarConverter Default constructor called" << std::endl;
+}
+
+ScalarConverter::ScalarConverter(const ScalarConverter &copyObj)
+{
+	std::cout << "ScalarConverter Copy constructor called" << std::endl;
+	if (this != &copyObj)
+		*this = copyObj;
+}
+
+ScalarConverter &ScalarConverter::operator=(const ScalarConverter &assignCopy)
+{
+	std::cout << "ScalarConverter Copy Assignment operator called" << std::endl;
+	(void)assignCopy;
+	return (*this);
+}
+
+ScalarConverter::~ScalarConverter()
+{
+	std::cout << "ScalarConverter Destructor called" << std::endl;
+}
+
+// void ScalarConverter::convert(std::string &output)
+// {
+// 	return ;
+// }
+
+// tools
+
+
+
+
+
+#endif // SCALARCONVERTER_HPP

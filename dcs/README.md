@@ -7,110 +7,115 @@
 02. **[Exceptions](#exceptions)** -->
 03. **[Resources](#resources)**
 
-<!-- ## Nested classes
-Uma **classe aninhada** (nested class) é uma classe que é definida dentro do escopo de outra classe. Essas classes são úteis para organizar e agrupar logicamente o código relacionado, especialmente quando a classe aninhada é fortemente associada à classe externa. A classe aninhada pode acessar membros privados da classe que a contém, mas o contrário não é verdade a menos que sejam feitas provisões específicas para isso.
+## static_cast
+*`static_cast` é um operador de casting que permite a conversão explícita de um tipo de dado para outro. Ele é mais seguro e controlado do que os casts tradicionais em C (como `(int)x`), pois* ***realiza verificações em tempo de compilação.***
+
+### O `static_cast` é usado para:
+- Conversões entre tipos primitivos (por exemplo, de `int` para `float`).
+- Conversões entre ponteiros de classes relacionadas por herança.
+- Conversões explícitas entre tipos de dados compatíveis.
+
+### Como funciona?
+- O `static_cast` realiza a conversão em tempo de compilação, garantindo que a conversão seja válida e segura. No entanto, ele não realiza verificações em tempo de execução, então o programador deve garantir que a conversão faz sentido.
 
 ### Exemplos
 
-Aqui está um exemplo básico para ilustrar o conceito de classes aninhadas:
+Aqui está um exemplo simples de como usar `static_cast`:
 
 ```cpp
 #include <iostream>
 
-class Outer {
-public:
-    Outer(int val) : value(val) {}
-    void show() const { std::cout << "Outer value: " << value << std::endl; }
+int main() {
+    // Conversão entre tipos primitivos
+    int i = 10;
+    float f = static_cast<float>(i);
+    std::cout << "Valor de f: " << f << std::endl;
 
-    class Inner {
+    // Conversão entre ponteiros de classes relacionadas por herança
+    class Base {
     public:
-        Inner(int val) : innerValue(val) {}
-        void show() const { std::cout << "Inner value: " << innerValue << std::endl; }
-    private:
-        int innerValue;
+        virtual void show() { std::cout << "Base class" << std::endl; }
     };
 
-private:
-    int value;
-};
+    class Derived : public Base {
+    public:
+        void show() override { std::cout << "Derived class" << std::endl; }
+    };
 
-int main() {
-    Outer outer(10);
-    outer.show();
+    Base* basePtr = new Derived();
+    Derived* derivedPtr = static_cast<Derived*>(basePtr);
+    derivedPtr->show(); // Output: Derived class
 
-    Outer::Inner inner(20);
-    inner.show();
-
+    delete basePtr;
     return 0;
 }
 ```
 
-### Explicações
+### Pontos importantes
+- **Segurança em tempo de compilação**: O `static_cast` garante que a conversão é válida em tempo de compilação.
+- **Sem verificações em tempo de execução**: Diferente do `dynamic_cast`, o `static_cast` não realiza verificações em tempo de execução, então o programador deve garantir que a conversão é segura.
+- **Uso em herança**: Pode ser usado para converter ponteiros ou referências entre classes base e derivadas.
 
-1. **Definição da Classe Aninhada:**
-   - A classe `Inner` é definida dentro da classe `Outer`.
-   - `Inner` é uma classe pública de `Outer`, o que significa que pode ser acessada de fora da classe `Outer`.
+### Quando usar `static_cast`?
+Use `static_cast` quando você tem certeza de que a conversão é segura e válida, e quando você precisa de uma conversão mais controlada e explícita do que os casts tradicionais em C.
 
-2. **Criação de Objetos:**
-   - Um objeto da classe `Outer` é criado usando o construtor `Outer`.
-   - Um objeto da classe `Inner` é criado usando `Outer::Inner`, indicando que `Inner` está dentro do escopo de `Outer`.
+[↑ Index ↑](#index)
 
-3. **Acesso aos Membros:**
-   - A classe `Inner` tem seu próprio conjunto de membros, independente da classe `Outer`.
-   - `Inner` pode acessar os membros privados da classe `Outer` se necessário, mas nesse exemplo específico, não há tal acesso.
+## Promotion Casts
+*Promotion casts referem-se a conversões automáticas que o compilador realiza para promover um tipo de dado a um tipo maior ou mais abrangente. Isso geralmente ocorre em operações aritméticas. Por exemplo:*
+- **Inteiro para float**: Quando você soma um **int** e um float, o **int** é promovido a **float**.
+- **Char para int**: Quando você usa um **char** em uma expressão aritmética, ele é promovido a **int**.
 
-### Acesso aos Membros Privados
+### Conversões Implícitas
+Conversões implícitas são aquelas que o compilador realiza automaticamente, sem a necessidade de um cast explícito. 
 
-Uma classe aninhada pode acessar membros privados da classe externa diretamente. Aqui está um exemplo:
+### Eexemplo:
+```cpp
+int i = 42;
+float f = i; // Conversão implícita de int para float
+```
+### O que a frase quer dizer?
+A frase "Accept the use of implicit casts for promotion casts only." sugere que você deve permitir que o compilador realize conversões implícitas apenas quando se trata de promotion casts. Para outras conversões, você deve usar casts explícitos, como static_cast, para deixar claro que a conversão é intencional e segura.
 
+### Exemplo
+
+Aqui está um exemplo que ilustra a diferença:
 ```cpp
 #include <iostream>
 
-class Outer {
-public:
-    Outer(int val) : value(val) {}
+void example() {
+    int i = 42;
+    float f = i; // Permitido: promoção implícita de int para float
 
-    class Inner {
-    public:
-        void show(const Outer& outer) const { std::cout << "Accessing Outer value: " << outer.value << std::endl; }
-    };
+    double d = 3.14;
 
-private:
-    int value;
-};
+    // Recomendado:
+    // uso de static_cast para conversão explícita de double para int
+    int j = static_cast<int>(d); 
+}
 
 int main() {
-    Outer outer(10);
-    Outer::Inner inner;
-    inner.show(outer);
-
+    example();
     return 0;
 }
 ```
 
-Neste exemplo, a classe `Inner` acessa diretamente o membro privado `value` da instância da classe `Outer` passada como argumento.
+### Resumo
+- **Promotion casts**: Permita conversões implícitas apenas para promoções automáticas de tipos menores para tipos maiores.
+- **Outras conversões**: Use casts explícitos (`static_cast`, `dynamic_cast`, etc.) para deixar claro que a conversão é intencional.
 
-### Utilização Prática
+*Essa abordagem ajuda a evitar erros sutis e torna o código mais legível e seguro.*
 
-Classes aninhadas são úteis em várias situações:
+### Classe sem dados e nao instanciavel
+*Para criar uma classe canônica ortodoxa em C++ que não precisa armazenar nada e não deve ser instanciável pelos usuários, você pode seguir alguns passos:*
 
-1. **Encapsulamento de Implementação:**
-   - A classe aninhada pode ser usada para ocultar detalhes de implementação que não devem ser expostos fora da classe externa.
+- **Tornar o construtor privado**: Isso impede que os usuários instanciem a classe diretamente.
+- **Declarar um destrutor privado**: Isso impede a destruição da instância fora da classe.
+- **Declarar um construtor de cópia e um operador de atribuição como privados e não implementados**: Isso impede a cópia da instância.
 
-2. **Organização de Código:**
-   - Mantém o código relacionado logicamente agrupado, o que pode tornar o código mais limpo e fácil de entender.
-
-3. **Acesso a Membros Privados:**
-   - Facilita o acesso a membros privados da classe externa sem a necessidade de friend declarations.
-
-### Conclusão
-
-Classes aninhadas em C++ são uma poderosa ferramenta para organizar e encapsular o código, mantendo o acesso aos membros privados quando necessário. Elas são particularmente úteis quando há uma relação lógica forte entre as duas classes, permitindo um design mais limpo e coeso.
-
-[↑ Index ↑](#index) -->
 [↑ Index ↑](#index)
 
 ## Resources
 Resource | Source
 ---------|:-----:
-[Type Casting](https://youtube.com/playlist?list=PL1w8k37X_6L-KS5DQt7U0rCtgIgdIadWz&si=v7aaa5tKTrmOP7nv) | `YouTube`
+[Type Casting](https://youtube.com/playlist?list =PL1w8k37X_6L-KS5DQt7U0rCtgIgdIadWz&si=v7aaa5tKTrmOP7nv) | `YouTube`
