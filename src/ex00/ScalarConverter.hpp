@@ -6,9 +6,65 @@
 /*   By: faaraujo <faaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 19:42:59 by faaraujo          #+#    #+#             */
-/*   Updated: 2024/08/22 22:21:12 by faaraujo         ###   ########.fr       */
+/*   Updated: 2024/08/24 21:28:31 by faaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef SCALARCONVERTER_HPP
+# define SCALARCONVERTER_HPP
+
+#include <iostream>
+#include <iostream>
+#include <limits>
+#include <string>
+#include <cctype>
+#include <cstdlib>
+#include <iomanip>
+#include <climits>
+#include <cfloat>
+
+enum
+{
+	FAILED = 1,
+	CHAR,
+	NUMBER,
+	INFINITY_FLOAT,
+	INFINITY_DOUBLE,
+};
+
+class ScalarConverter
+{
+	private:
+		ScalarConverter();
+		ScalarConverter(const ScalarConverter &copyObj);
+		ScalarConverter &operator=(const ScalarConverter &assignCopy);
+		~ScalarConverter();
+	public:
+		static void convert(std::string input);
+};
+
+// Check input
+int		isSpecialNotPrint(const char &c);
+int		isOneChar(const std::string &input);
+int		isNumber(const std::string &input);
+int		isPseudoLiterals(const std::string &input);
+int		getType(const std::string &input);
+
+// Cast Functions
+void	castToChar(long long int value);
+void	castToInt(long long int value);
+void	castToFloat(float value);
+void	castToDouble(double value);
+void	castToDouble(double value);
+
+// Menssage output
+void	printCharConvertions(const std::string &input);
+void	printNumberConvertions(const std::string &input);
+void	printPseudoConvertions(const std::string &input);
+
+
+
+#endif // SCALARCONVERTER_HPP
 
 /*
 Write a class ScalarConverter that will contain only one static method "convert"
@@ -58,67 +114,3 @@ Se uma conversão não fizer sentido ou estourar, exiba uma mensagem para inform
 ao usuário que a conversão de tipo é impossível. Inclua qualquer cabeçalho 
 necessário para lidar com limites numéricos e valores especiais.
 */
-
-#ifndef SCALARCONVERTER_HPP
-# define SCALARCONVERTER_HPP
-
-#include <iostream>
-
-enum
-{
-	CHAR = 2,
-	INT,
-	FLOAT,
-	DOUBLE,
-	INFINITY_FLOAT,
-	INFINITY_DOUBLE,
-	QUIET_NAN,
-};
-
-class ScalarConverter
-{
-	private:
-		ScalarConverter();
-		ScalarConverter(const ScalarConverter &copyObj);
-		ScalarConverter &operator=(const ScalarConverter &assignCopy);
-		~ScalarConverter();
-	public:
-		static void convert(std::string &output);
-};
-
-ScalarConverter::ScalarConverter()
-{
-	std::cout << "ScalarConverter Default constructor called" << std::endl;
-}
-
-ScalarConverter::ScalarConverter(const ScalarConverter &copyObj)
-{
-	std::cout << "ScalarConverter Copy constructor called" << std::endl;
-	if (this != &copyObj)
-		*this = copyObj;
-}
-
-ScalarConverter &ScalarConverter::operator=(const ScalarConverter &assignCopy)
-{
-	std::cout << "ScalarConverter Copy Assignment operator called" << std::endl;
-	(void)assignCopy;
-	return (*this);
-}
-
-ScalarConverter::~ScalarConverter()
-{
-	std::cout << "ScalarConverter Destructor called" << std::endl;
-}
-
-// void ScalarConverter::convert(std::string &output)
-// {
-// 	return ;
-// }
-
-// tools
-
-
-
-
-
-#endif // SCALARCONVERTER_HPP
