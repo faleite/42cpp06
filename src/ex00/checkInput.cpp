@@ -6,7 +6,7 @@
 /*   By: faaraujo <faaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 21:21:37 by faaraujo          #+#    #+#             */
-/*   Updated: 2024/08/24 21:42:17 by faaraujo         ###   ########.fr       */
+/*   Updated: 2024/08/25 15:01:08 by faaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	isNumber(const std::string &input)
 		i++;
 	if (i == input.size())
 		return (NUMBER);
-	// check float
+	// check float and double
 	if (input[i++] == '.')
 	{
 		while (i < input.size() && std::isdigit(input[i]))

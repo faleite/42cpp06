@@ -3,8 +3,8 @@
 
 ## Index
 
-<!-- 01. **[Nested classes](#nested-classes)**
-02. **[Exceptions](#exceptions)** -->
+01. **[static_cast](#static_cast)**
+02. **[reinterpret_cast](#reinterpret_cast)**
 03. **[Resources](#resources)**
 
 ## static_cast
@@ -115,7 +115,124 @@ int main() {
 
 [↑ Index ↑](#index)
 
+## reinterpret_cast
+O **reinterpret_cast** é um operador de casting em C++ que permite a conversão de um ponteiro de um tipo para outro tipo de ponteiro, ou de um tipo de referência para outro tipo de referência. Ele é usado para realizar conversões que não são necessariamente seguras, mas que o programador garante que são válidas. O **reinterpret_cast** não realiza verificações de segurança em tempo de compilação ou execução, confiando inteiramente no programador.
+
+### Como Funciona
+1. Conversão de Ponteiros:
+    - Permite converter um ponteiro de um tipo para outro tipo de ponteiro.
+    - Exemplo:
+    ```cpp
+    float a = 420.042f;
+    void *b = &a; // Conversão implícita de float* para void*
+    int *c = reinterpret_cast<int *>(b); // Conversão explícita de void* para int*
+    ```
+2. Conversão de Referências:
+    - Permite converter uma referência de um tipo para outro tipo de referência.
+    - Exemplo:
+    ```cpp
+    int &d = reinterpret_cast<int &>(b); // Conversão explícita de void* para int&
+    ```
+3. Uso com Tipos Inteiros:
+    - Pode ser usado para converter ponteiros para tipos inteiros e vice-versa.
+    - Exemplo:
+    ```cpp
+    uintptr_t intPtr = reinterpret_cast<uintptr_t>(b); // Conversão de void* para uintptr_t
+    void *ptr = reinterpret_cast<void *>(intPtr); // Conversão de uintptr_t para void*
+    ```
+### Exemplos no Código
+```cpp
+int	exemplo1(void)
+{
+	float a = 420.042f; // reference value
+
+	void * b = &a; // implicit promotion -> ok
+	int * c = reinterpret_cast<int *>(b); // explicit demotion -> ok
+	// there will be no semantics checks, as the compiler will trust you
+	// they will reinterpret any address as the specified other type
+	int & d = reinterpret_cast<int &>(b); // explicit demotion -> ok
+	
+	std::cout << "a: " << a
+	<< "\nb: " << b
+	<< "\nc: " << *c
+	<< "\nd: " <<  d << std::endl;
+	
+	return (0);
+}
+
+int	exemplo2(void)
+{
+	int a = 70; // F -> 70 char  reinterpret cast
+	std::cout << "a: " << a << std::endl;
+
+	int *ptr1 = &a;
+	char *cptr = reinterpret_cast<char *>(ptr1);
+	std::cout << "cptr: " << *cptr << std::endl;
+
+	int *ptr2 = reinterpret_cast<int *>(a);
+	std::cout << "ptr2: " << ptr2 << std::endl;
+	
+	// error: cast from 'int*' to 'int' loses precision [-fpermissive]
+	// 						\/
+	// std::cout << reinterpret_cast<int>(ptr2) << std::endl; // int(4) <- int*(8)
+	std::cout << sizeof(int *) << " " << sizeof(int) << " " << sizeof(long) << std::endl;
+	std::cout << reinterpret_cast<long>(ptr2) << std::endl; // int(4) <- int*(8)
+ 	 
+	return (0);
+}
+
+int exemplo3(void)
+{
+	/*
+	 memory
+	 
+		|----| int 4b
+		|----| int 4b
+		|-   | char 1b
+		|-   | bool 1b
+		
+	 Total 12b
+	*/
+	struct Data
+	{ 
+		int		number1;
+		int		number2;
+		char	charactere;
+		bool	boolean;
+	};
+
+	Data d;
+	
+	d.number1 = 70;
+	d.number2 = 65;
+	d.charactere = 'F';
+	d.boolean = true;
+
+	int *ptr_d = reinterpret_cast<int *>(&d);
+	std::cout << *ptr_d << std::endl;
+	ptr_d++;
+	std::cout << *ptr_d << std::endl;
+	ptr_d++;
+	
+	char *ptr_c = reinterpret_cast<char *>(ptr_d);
+	std::cout << *ptr_c << std::endl;
+	ptr_c++;
+	
+	bool *ptr_b = reinterpret_cast<bool *>(ptr_c);
+	std::cout << *ptr_b << std::endl;
+	
+	return (0);
+}
+```
+
+### Pontos Importantes
+- **Segurança**: O `reinterpret_cast` não garante a segurança da conversão. O programador deve garantir que a conversão é válida.
+- **Uso Comum**: É comumente usado em sistemas de baixo nível, como drivers de hardware, onde é necessário manipular diretamente endereços de memória.
+- **Portabilidade**: O uso de `reinterpret_cast` pode tornar o código menos portátil, pois depende da representação interna dos tipos.
+
+[↑ Index ↑](#index)
+
 ## Resources
 Resource | Source
 ---------|:-----:
-[Type Casting](https://youtube.com/playlist?list =PL1w8k37X_6L-KS5DQt7U0rCtgIgdIadWz&si=v7aaa5tKTrmOP7nv) | `YouTube`
+[Type Casting](https://youtube.com/playlist?list=PL1w8k37X_6L-KS5DQt7U0rCtgIgdIadWz&si=v7aaa5tKTrmOP7nv) | `YouTube`

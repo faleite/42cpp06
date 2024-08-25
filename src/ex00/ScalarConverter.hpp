@@ -6,7 +6,7 @@
 /*   By: faaraujo <faaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 19:42:59 by faaraujo          #+#    #+#             */
-/*   Updated: 2024/08/24 21:28:31 by faaraujo         ###   ########.fr       */
+/*   Updated: 2024/08/25 15:00:04 by faaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ void	castToDouble(double value);
 void	printCharConvertions(const std::string &input);
 void	printNumberConvertions(const std::string &input);
 void	printPseudoConvertions(const std::string &input);
-
-
 
 #endif // SCALARCONVERTER_HPP
 

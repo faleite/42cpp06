@@ -6,7 +6,7 @@
 /*   By: faaraujo <faaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 19:42:59 by faaraujo          #+#    #+#             */
-/*   Updated: 2024/08/24 21:43:38 by faaraujo         ###   ########.fr       */
+/*   Updated: 2024/08/25 14:50:47 by faaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,4 @@ void ScalarConverter::convert(std::string input)
 		default:
 			return (printPseudoConvertions(input));
 	}
-	return ;
 }
