@@ -6,7 +6,7 @@
 /*   By: faaraujo <faaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 20:07:47 by faaraujo          #+#    #+#             */
-/*   Updated: 2024/08/25 18:50:11 by faaraujo         ###   ########.fr       */
+/*   Updated: 2024/08/27 18:05:11 by faaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(void)
 {
 	Data myData;
 	myData.str1 = "Hello";
-	myData.str2 = "Schhol!";
+	myData.str2 = "School!";
 	myData.nbr = 42;
 	
 	uintptr_t intPtr = Serializer::serialize(&myData);

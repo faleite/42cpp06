@@ -6,14 +6,13 @@
 /*   By: faaraujo <faaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 19:42:59 by faaraujo          #+#    #+#             */
-/*   Updated: 2024/08/25 15:00:04 by faaraujo         ###   ########.fr       */
+/*   Updated: 2024/08/27 17:35:14 by faaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SCALARCONVERTER_HPP
 # define SCALARCONVERTER_HPP
 
-#include <iostream>
 #include <iostream>
 #include <limits>
 #include <string>
