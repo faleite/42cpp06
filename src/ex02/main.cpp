@@ -6,7 +6,7 @@
 /*   By: faaraujo <faaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 15:12:23 by faaraujo          #+#    #+#             */
-/*   Updated: 2024/08/26 21:53:11 by faaraujo         ###   ########.fr       */
+/*   Updated: 2024/08/27 16:59:58 by faaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	identify(Base &p)
 {
 	try
 	{
-		dynamic_cast<A &>(p);
+		A a = dynamic_cast<A &>(p);
 		std::cout << "Reference: A" << std::endl;
 	}
 	catch(const std::exception& e) 
@@ -90,7 +90,7 @@ void	identify(Base &p)
 	}
 	try
 	{
-		dynamic_cast<B &>(p);
+		B b = dynamic_cast<B &>(p);
 		std::cout << "Reference: B" << std::endl;
 	}
 	catch(const std::exception& e) 
@@ -99,7 +99,7 @@ void	identify(Base &p)
 	}
 	try
 	{
-		dynamic_cast<C &>(p);
+		C c = dynamic_cast<C &>(p);
 		std::cout << "Reference: C" << std::endl;
 	}
 	catch(const std::exception& e) 
