@@ -5,7 +5,8 @@
 
 01. **[static_cast](#static_cast)**
 02. **[reinterpret_cast](#reinterpret_cast)**
-03. **[Resources](#resources)**
+03. **[dynamic_cast](#dynamic_cast)**
+04. **[Resources](#resources)**
 
 ## static_cast
 *`static_cast` é um operador de casting que permite a conversão explícita de um tipo de dado para outro. Ele é mais seguro e controlado do que os casts tradicionais em C (como `(int)x`), pois* ***realiza verificações em tempo de compilação.***
@@ -231,6 +232,81 @@ int exemplo3(void)
 - **Portabilidade**: O uso de `reinterpret_cast` pode tornar o código menos portátil, pois depende da representação interna dos tipos.
 
 [↑ Index ↑](#index)
+
+## dynamic_cast
+
+`dynamic_cast` é um operador de casting que permite a conversão segura de ponteiros e referências de classes base para classes derivadas em tempo de execução. Ele é usado principalmente em hierarquias de classes polimórficas.
+
+O `dynamic_cast` é usado para:
+- Conversões seguras entre ponteiros e referências de classes relacionadas por herança.
+- Verificar a validade de uma conversão em tempo de execução, retornando nullptr para ponteiros ou lançando uma exceção std::bad_cast para referências se a conversão não for possível.
+
+**Como funciona?**
+
+O `dynamic_cast` realiza verificações em tempo de execução para garantir que a conversão seja válida. Isso é especialmente útil em hierarquias de classes polimórficas onde a conversão pode falhar.
+
+*Exemplos*
+Aqui está um exemplo simples de como usar `dynamic_cast`:
+
+```cpp
+#include <iostream>
+#include <typeinfo>
+
+class Base {
+public:
+    virtual ~Base() {} // Necessário para que dynamic_cast funcione corretamente
+};
+
+class Derived : public Base {
+public:
+    void show() { std::cout << "Derived class" << std::endl; }
+};
+
+class Unrelated {};
+
+int main() {
+    Base* basePtr = new Derived();
+    Derived* derivedPtr = dynamic_cast<Derived*>(basePtr);
+
+    if (derivedPtr) {
+        derivedPtr->show(); // Output: Derived class
+    } else {
+        std::cout << "Conversion failed" << std::endl;
+    }
+
+    // Tentativa de conversão inválida
+    Base* anotherBasePtr = new Base();
+    Derived* anotherDerivedPtr = dynamic_cast<Derived*>(anotherBasePtr);
+
+    if (anotherDerivedPtr) {
+        anotherDerivedPtr->show();
+    } else {
+        std::cout << "Conversion failed" << std::endl; // Output: Conversion failed
+    }
+
+    // Conversão de referência
+    try {
+        Base& baseRef = *basePtr;
+        Derived& derivedRef = dynamic_cast<Derived&>(baseRef);
+        derivedRef.show(); // Output: Derived class
+    } catch (const std::bad_cast& e) {
+        std::cout << "Bad cast: " << e.what() << std::endl;
+    }
+
+    delete basePtr;
+    delete anotherBasePtr;
+    return 0;
+}
+```
+
+**Pontos importantes**
+- Verificações em tempo de execução: O dynamic_cast garante que a conversão é válida em tempo de execução, retornando nullptr para ponteiros ou lançando uma exceção std::bad_cast para referências se a conversão falhar.
+- Uso em hierarquias polimórficas: O dynamic_cast só funciona com classes que possuem pelo menos uma função virtual, geralmente o destrutor virtual.
+- Custo de desempenho: Devido às verificações em tempo de execução, o dynamic_cast pode ser mais lento do que outros tipos de casting.
+
+**Quando usar `dynamic_cast`?**
+
+Use `dynamic_cast` quando você precisa de uma conversão segura entre tipos em uma hierarquia de classes polimórficas e quando você precisa garantir que a conversão é válida em tempo de execução.
 
 ## Resources
 Resource | Source
